@@ -1,0 +1,126 @@
+<html>
+<head>
+<script src="js/Chart.js"></script>
+<script type='text/javascript' src='http://code.jquery.com/jquery-1.9.1.js'></script>
+
+<script type='text/javascript'>//<![CDATA[
+
+$(function () {
+    $('#container').highcharts({
+        title: {
+            text: 'Monthly Average Temperature',
+            x: -20 //center
+        },
+        subtitle: {
+            text: 'Source: WorldClimate.com',
+            x: -20
+        },
+        xAxis: {
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        },
+        yAxis: {
+            title: {
+                text: 'Temperature (°C)'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: '°C'
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{
+            name: 'Tokyo',
+            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+        }, {
+            name: 'New York',
+            data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
+        }, {
+            name: 'Berlin',
+            data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
+        }, {
+            name: 'London',
+            data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+        }]
+    });
+});
+//]]> 
+
+</script>
+
+
+</head>
+<body>
+
+<iframe width="500" height="300" scrolling="no" frameborder="no" src="https://www.google.com/fusiontables/embedviz?q=select+col2%3E%3E1+from+1fdmIwpI-ZtgEW3NijVS5JXwWF9kC_c5twgXQ4D6M&amp;viz=MAP&amp;h=false&amp;lat=36.439441463231255&amp;lng=-82.093765625&amp;t=1&amp;z=3&amp;l=col2%3E%3E1&amp;y=2&amp;tmplt=2&amp;hml=KML"></iframe>
+
+
+<div style="width: 50%">
+			<canvas id="canvas" height="450" width="600"></canvas>
+			
+		</div>
+		<div id="my-Bar-legend"></div>
+
+
+	<script>
+	var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+	
+
+	var barChartData = {
+		labels : ["January","February","March","April","May","June","July"],
+		    
+		datasets : [
+			{
+				fillColor : "rgba(220,220,220,0.5)",
+				showInLegend: true,
+				strokeColor : "rgba(220,220,220,0.8)",
+				highlightFill: "rgba(220,220,220,0.75)",
+				highlightStroke: "rgba(220,220,220,1)",
+				data : [25,80,45,35,27,47,68]		    
+			},
+			{
+				fillColor : "rgba(151,187,205,0.5)",
+				showInLegend: true,
+				strokeColor : "rgba(151,187,205,0.8)",
+				highlightFill : "rgba(151,187,205,0.75)",
+				highlightStroke : "rgba(151,187,205,1)",
+				data : [14,92,35,76,47,36,35]
+			}
+		]
+
+	}
+	
+	var options = {
+	legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
+	}
+	window.onload = function(){
+		var ctx = document.getElementById("canvas").getContext("2d");
+		window.myBar = new Chart(ctx).Bar(barChartData, options, {
+			responsive : true,
+		
+		});
+		var legend = myBar.generateLegend();
+		$('#chart').append(legend);
+
+		
+	};
+
+	</script>
+	
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+
+</body>
+</html>
